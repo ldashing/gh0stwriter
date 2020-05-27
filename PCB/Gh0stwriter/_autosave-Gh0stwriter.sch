@@ -551,7 +551,7 @@ Text GLabel 7200 3850 0    50   BiDi ~ 0
 ICReset
 Text GLabel 9000 3850 0    50   BiDi ~ 0
 ICReset
-Text GLabel 1150 3900 0    50   BiDi ~ 0
+Text GLabel 800  4200 0    50   BiDi ~ 0
 ICReset
 $Comp
 L Connector_Generic:Conn_01x06 J3
@@ -645,4 +645,8 @@ Text GLabel 1150 3800 0    50   BiDi ~ 0
 Hammer
 Text GLabel 5500 6350 0    50   BiDi ~ 0
 Hammer
+Text GLabel 4150 5700 0    50   BiDi ~ 0
+Endstop
+Text GLabel 1150 3900 0    50   BiDi ~ 0
+Endstop
 $EndSCHEMATC
