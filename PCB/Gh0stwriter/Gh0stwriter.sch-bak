@@ -25,12 +25,12 @@ F 3 "https://www.pololu.com/product/2980/pictures" H 5750 3450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L YAAJ_STM32:BluePill_1 BP?1
+L YAAJ_STM32:BluePill_1 BP??
 U 1 1 5ECE59A4
 P 2600 4700
-F 0 "BP?1" H 3175 4875 50  0000 C CNN
+F 0 "BP??" H 3175 4875 50  0000 C CNN
 F 1 "BluePill_1" H 3175 4784 50  0000 C CNN
-F 2 "bluepill:YAAJ_BluePill" H 3850 2750 50  0001 C CNN
+F 2 "" H 3850 2750 50  0001 C CNN
 F 3 "" H 3850 2750 50  0001 C CNN
 	1    2600 4700
 	1    0    0    -1  
