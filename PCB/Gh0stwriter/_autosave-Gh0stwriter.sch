@@ -60,12 +60,12 @@ $EndComp
 $Comp
 L Driver_Motor:Pololu_Breakout_A4988 A2
 U 1 1 5ECFA6AE
-P 6250 4250
-F 0 "A2" H 6300 5131 50  0000 C CNN
-F 1 "Pololu_Breakout_A4988" H 6300 5040 50  0000 C CNN
-F 2 "Module:Pololu_Breakout-16_15.2x20.3mm" H 6525 3500 50  0001 L CNN
-F 3 "https://www.pololu.com/product/2980/pictures" H 6350 3950 50  0001 C CNN
-	1    6250 4250
+P 5900 3300
+F 0 "A2" H 5950 4181 50  0000 C CNN
+F 1 "Pololu_Breakout_A4988" H 5950 4090 50  0000 C CNN
+F 2 "Module:Pololu_Breakout-16_15.2x20.3mm" H 6175 2550 50  0001 L CNN
+F 3 "https://www.pololu.com/product/2980/pictures" H 6000 3000 50  0001 C CNN
+	1    5900 3300
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -280,23 +280,23 @@ $EndComp
 $Comp
 L power:GND #PWR0111
 U 1 1 5ED7A1C8
-P 6250 5050
-F 0 "#PWR0111" H 6250 4800 50  0001 C CNN
-F 1 "GND" V 6255 4922 50  0000 R CNN
-F 2 "" H 6250 5050 50  0001 C CNN
-F 3 "" H 6250 5050 50  0001 C CNN
-	1    6250 5050
+P 5900 4100
+F 0 "#PWR0111" H 5900 3850 50  0001 C CNN
+F 1 "GND" V 5905 3972 50  0000 R CNN
+F 2 "" H 5900 4100 50  0001 C CNN
+F 3 "" H 5900 4100 50  0001 C CNN
+	1    5900 4100
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:GND #PWR0112
 U 1 1 5ED7A4BD
-P 6450 5050
-F 0 "#PWR0112" H 6450 4800 50  0001 C CNN
-F 1 "GND" V 6455 4922 50  0000 R CNN
-F 2 "" H 6450 5050 50  0001 C CNN
-F 3 "" H 6450 5050 50  0001 C CNN
-	1    6450 5050
+P 6100 4100
+F 0 "#PWR0112" H 6100 3850 50  0001 C CNN
+F 1 "GND" V 6105 3972 50  0000 R CNN
+F 2 "" H 6100 4100 50  0001 C CNN
+F 3 "" H 6100 4100 50  0001 C CNN
+	1    6100 4100
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -357,12 +357,12 @@ $EndComp
 $Comp
 L power:+3V3 #PWR0118
 U 1 1 5ED85A0B
-P 6250 3550
-F 0 "#PWR0118" H 6250 3400 50  0001 C CNN
-F 1 "+3V3" V 6265 3678 50  0000 L CNN
-F 2 "" H 6250 3550 50  0001 C CNN
-F 3 "" H 6250 3550 50  0001 C CNN
-	1    6250 3550
+P 5900 2600
+F 0 "#PWR0118" H 5900 2450 50  0001 C CNN
+F 1 "+3V3" V 5915 2728 50  0000 L CNN
+F 2 "" H 5900 2600 50  0001 C CNN
+F 3 "" H 5900 2600 50  0001 C CNN
+	1    5900 2600
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -423,12 +423,12 @@ $EndComp
 $Comp
 L power:Vdrive #PWR0124
 U 1 1 5EDBB3D5
-P 6450 3550
-F 0 "#PWR0124" H 6250 3400 50  0001 C CNN
-F 1 "Vdrive" H 6465 3723 50  0000 C CNN
-F 2 "" H 6450 3550 50  0001 C CNN
-F 3 "" H 6450 3550 50  0001 C CNN
-	1    6450 3550
+P 6100 2600
+F 0 "#PWR0124" H 5900 2450 50  0001 C CNN
+F 1 "Vdrive" H 6115 2773 50  0000 C CNN
+F 2 "" H 6100 2600 50  0001 C CNN
+F 3 "" H 6100 2600 50  0001 C CNN
+	1    6100 2600
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -545,23 +545,23 @@ Text GLabel 1150 4400 0    50   BiDi ~ 0
 PA10
 Text GLabel 3700 3800 0    50   BiDi ~ 0
 ICReset
-Text GLabel 5850 3850 0    50   BiDi ~ 0
+Text GLabel 5500 2900 0    50   BiDi ~ 0
 ICReset
-Text GLabel 7200 3850 0    50   BiDi ~ 0
+Text GLabel 6850 2900 0    50   BiDi ~ 0
 ICReset
 Text GLabel 9000 3850 0    50   BiDi ~ 0
 ICReset
-Text GLabel 800  4200 0    50   BiDi ~ 0
+Text GLabel 1150 4900 0    50   BiDi ~ 0
 ICReset
 $Comp
 L Connector_Generic:Conn_01x06 J3
 U 1 1 5EE5F861
-P 6950 4150
-F 0 "J3" H 7030 4142 50  0000 L CNN
-F 1 "Conn_01x06" H 7030 4051 50  0000 L CNN
-F 2 "Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical" H 6950 4150 50  0001 C CNN
-F 3 "~" H 6950 4150 50  0001 C CNN
-	1    6950 4150
+P 6600 3200
+F 0 "J3" H 6680 3192 50  0000 L CNN
+F 1 "Conn_01x06" H 6680 3101 50  0000 L CNN
+F 2 "Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical" H 6600 3200 50  0001 C CNN
+F 3 "~" H 6600 3200 50  0001 C CNN
+	1    6600 3200
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -649,4 +649,32 @@ Text GLabel 4150 5700 0    50   BiDi ~ 0
 Endstop
 Text GLabel 1150 3900 0    50   BiDi ~ 0
 Endstop
+Text GLabel 1150 4700 0    50   BiDi ~ 0
+A4DIR
+Text GLabel 1150 4800 0    50   BiDi ~ 0
+A4STP
+Text GLabel 9000 4250 0    50   BiDi ~ 0
+A4STP
+Text GLabel 9000 4350 0    50   BiDi ~ 0
+A4DIR
+Text GLabel 7200 4250 0    50   BiDi ~ 0
+A3STP
+Text GLabel 7200 4350 0    50   BiDi ~ 0
+A3DIR
+Text GLabel 5500 3300 0    50   BiDi ~ 0
+A2STP
+Text GLabel 5500 3400 0    50   BiDi ~ 0
+A2DIR
+Text GLabel 3700 4200 0    50   BiDi ~ 0
+A1STP
+Text GLabel 3700 4300 0    50   BiDi ~ 0
+A1DIR
+Text GLabel 1150 5000 0    50   BiDi ~ 0
+A3DIR
+Text GLabel 1150 5100 0    50   BiDi ~ 0
+A3STP
+Text GLabel 1150 5200 0    50   BiDi ~ 0
+A2DIR
+Text GLabel 1150 5300 0    50   BiDi ~ 0
+A2STP
 $EndSCHEMATC
