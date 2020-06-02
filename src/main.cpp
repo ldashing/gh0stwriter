@@ -28,6 +28,8 @@ int currentHeadPos = 0;		//Save the current head position (x coord)
 //The char table with all avalable chars and ther position on the dial/wheel
 String charTable = "_W)UIN?D\"C*R$LTAY&VZSPFB?E0987654321+?>^f@?wjmlv-,.zobudiaesrngchpky????qxt#?<?`??G?%JQ?X!O/K(H\'M:;= {";
 
+void printChar(char charToPrint);
+
 void
 recvWithEndMarker ()
 {
@@ -287,7 +289,7 @@ print2D (int sizeX, int sizeY)
 		int blankSpace = 0;
 		for (int j = 0; j < sizeX; j++)
 		{
-			if (qrcode[i][j])
+			if (1)
 			{
 				head.move (blankSpace);
 				currentHeadPos += blankSpace;
