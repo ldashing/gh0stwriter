@@ -31,12 +31,12 @@ String charTable = "_W)UIN?D\"C*R$LTAY&VZSPFB?E0987654321+?>^f@?wjmlv-,.zobudiae
 void
 recvWithEndMarker ()
 {
-	int rc = '';
+	int rc = 0;
 	if (Serial.available () > 0)
 	{
 		rc = Serial.read ();
 		if (rc >= 0) {
-			printChar(rc);
+			printChar((char)rc);
 		}
 	}
 }
@@ -74,11 +74,9 @@ newLine ()
 /*
    Method for printing a singe char at the current position and than advance the head to the next position or doing some special char stuff such as space or CR
  */
-	void
-printChar (char charToPrint)
-{
+void printChar (char charToPrint) {
 	int charNumber = charTable.lastIndexOf (charToPrint);
-	if (charNumber >= 100)
+	if (charNumber >= 100 && charNumber >= 0)
 	{				//Some special chars:
 		Serial.print ("[INFO]Special char :");
 		Serial.print (charToPrint);
@@ -104,9 +102,7 @@ printChar (char charToPrint)
 				feed.disable ();
 				break;
 		}
-	}
-	else
-	{
+	} else if (charNumber >= 0) {
 		Serial.print ("[INFO]Printing a char :");
 		Serial.print (charToPrint);
 		Serial.print (" Pos on wheel: ");
@@ -141,6 +137,9 @@ printChar (char charToPrint)
 		delay (1);
 		tape.move (-12);
 		tape.disable ();
+	} else {
+		// This would execute when the character to print is not in the charTable
+		printChar('?');
 	}
 	Serial.print ("currentHeadPos: ");
 	Serial.println (currentHeadPos);
