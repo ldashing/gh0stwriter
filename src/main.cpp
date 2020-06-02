@@ -26,7 +26,7 @@ int lastChar = 0;		//Save the last char that was printed
 int currentHeadPos = 0;		//Save the current head position (x coord)
 
 //The char table with all avalable chars and ther position on the dial/wheel
-String charTable = "_W)UIN?D\"C*R$LTAY&VZSPFB?E0987654321+?>^f@?wjmlv-,.zobudiaesrngchpky????qxt#?<?`??G?%JQ?X!O/K(H\'M:;= {";
+String charTable = "_W)UIN?D\"C*R$LTAY&VZSPFB?E0987654321+?>^f@?wjmlv-,.zobudiaesrngchpky????qxt#?<?`??G?%JQ§X!O/K(H\'M:;= \n";
 
 void printChar(char charToPrint);
 
