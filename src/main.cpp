@@ -4,12 +4,17 @@
 #define MOTOR_STEPS 200 // Motor steps per revolution. Most steppers are 200 steps or 1.8 degrees/step
 #define RPM 100 //Seames to be the best
 #define MICROSTEPS 1 // 1=full step, 2=half step etc.
-
+/*
 //name(MOTOR_STEPS, DIR, STEP, SLEEP, M0, M1);
 BasicStepperDriver feed(MOTOR_STEPS, 3, A1, A0);
 BasicStepperDriver tape(MOTOR_STEPS, 9, 8, 7);
 BasicStepperDriver dial(MOTOR_STEPS, 6, 5, 4);
 BasicStepperDriver head(MOTOR_STEPS, 12, 11, 10);
+*/
+BasicStepperDriver feed(MOTOR_STEPS, PA6, PA5, PA7);
+BasicStepperDriver tape(MOTOR_STEPS, PB7, PB8, PB0);
+BasicStepperDriver dial(MOTOR_STEPS, PA15, PB3, PB10);
+BasicStepperDriver head(MOTOR_STEPS, PB5, PB6, PB1);
 
 //some configuration:
 int lineSpace=40; //Feed steps per new line
@@ -21,7 +26,7 @@ int lastChar=0; //Save the last char that was printed
 int currentHeadPos=0; //Save the current head position (x coord)
 String charTable = "_W)UIN?D\"C*R$LTAY&VZSPFB?E0987654321+?>^f@?wjmlv-,.zobudiaesrngchpky????qxt#?<?`??G?%JQ?X!O/K(H\'M:;= {"; //The char table with all avalable chars and ther position on the dial/wheel
 //                  \__________________________________________Printable chars(100)______________________________________/\_Special chars___/
-/*
+
 const bool qrcode[29][29] = {
    {1,1,1,1,1,1,1,0,1,1,0,0,0,0,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1} ,
 	 {1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,1} ,
@@ -53,7 +58,7 @@ const bool qrcode[29][29] = {
 	 {1,0,0,0,0,0,1,0,1,0,0,1,0,0,1,0,1,0,1,1,1,0,0,1,0,1,0,1,0} ,
 	 {1,1,1,1,1,1,1,0,1,0,0,0,0,0,1,1,1,0,0,1,1,0,0,0,0,1,0,1,0}
 };
-*/
+
 /*
 bool testPattern[29][29] = {
 	{1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1} ,
@@ -184,15 +189,53 @@ const bool chaos[38][38] = {
   {0,1,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0,0,0,0,1,0,1,0,0}
 
 };
-
 */
+const byte numChars = 100;
+char receivedChars[numChars]; // an array to store the received data
+
+bool newData = false;
+
+void recvWithEndMarker() {
+ static byte ndx = 0;
+ char endMarker = '\n';
+ char rc;
+
+ // if (Serial.available() > 0) {
+           while (Serial.available() > 0 && newData == false) {
+ rc = Serial.read();
+
+ if (rc != endMarker) {
+ receivedChars[ndx] = rc;
+ ndx++;
+ if (ndx >= numChars) {
+ ndx = numChars - 1;
+ }
+ }
+ else {
+  receivedChars[ndx] = '\0'; // terminate the string
+  receivedChars[ndx-1] = '\0'; // terminate the string
+ ndx = 0;
+ newData = true;
+ }
+ }
+}
+
+void showNewData() {
+ if (newData == true) {
+ Serial.print("This just in ... ");
+ Serial.println(receivedChars);
+ newData = false;
+ }
+}
+
+
 /*
 Hits the hammer as fast as possible
 */
 void hammerHit(){
-	digitalWrite(A5, HIGH);
+	digitalWrite(PB12, HIGH);
 	delay(10);
-	digitalWrite(A5, LOW);
+	digitalWrite(PB12, LOW);
 	delay(10);
 }
 
@@ -209,6 +252,7 @@ void newLine(){
 	feed.enable();
 	feed.move(lineSpace);
 	feed.disable();
+  head.disable();
 }
 
 /*
@@ -266,7 +310,7 @@ void printChar(char charToPrint){
 
 		head.enable();
 		head.move(charSpaceing);
-		//head.disable();
+	//	head.disable();
 		currentHeadPos+=charSpaceing;
 
 		tape.enable();
@@ -278,6 +322,7 @@ void printChar(char charToPrint){
 	Serial.print("currentHeadPos: ");
 	Serial.println(currentHeadPos);
 	Serial.print("\n\n\n");
+  head.disable();
 }
 
 /*
@@ -312,11 +357,11 @@ Reset the dail and return to the last head pos if needed
 */
 void dialReset(){
 	head.enable();
-	while(digitalRead(2)==HIGH){
+	while(digitalRead(PB13)==HIGH){
 		head.move(-1);
 		delay(1);
 	}
-//	head.disable();
+	head.disable();
 
 	dial.enable();
 	dial.move(-4*100);
@@ -324,17 +369,18 @@ void dialReset(){
 
 	head.enable();
 	head.move(70);
-//	head.disable();
+	head.disable();
 
 	if (currentHeadPos>0) {
 		head.enable();
 		head.move(currentHeadPos);
-	//	head.disable();
+		head.disable();
 	}
 }
 
 void setup(){
-		Serial.begin(9600);
+		Serial.begin(115200);
+    Serial.print("Ready...");
 
 		feed.begin(RPM, MICROSTEPS);
 		tape.begin(RPM, MICROSTEPS);
@@ -351,16 +397,16 @@ void setup(){
 		dial.disable();
 		head.disable();
 
-		pinMode(2, INPUT_PULLUP);
-		pinMode(A5,OUTPUT);
-		digitalWrite(A5, LOW);
-		pinMode(A2,OUTPUT);
+		pinMode(PB13, INPUT_PULLUP);
+		pinMode(PB12,OUTPUT);
+		digitalWrite(PB12, LOW);
+		pinMode(PB12,OUTPUT);
 
-		digitalWrite(A2, HIGH);
+		digitalWrite(PB4, HIGH);
 		delay(1);
-		digitalWrite(A2, LOW);
+		digitalWrite(PB4, LOW);
 		delay(1);
-		digitalWrite(A2, HIGH);
+		digitalWrite(PB4, HIGH);
 
 		dialReset();
 }
@@ -399,7 +445,7 @@ void print2D(int sizeX, int sizeY){
 	for(int i=0; i<sizeY; i++) {
 		int blankSpace=0;
 		for(int j=0; j<sizeX; j++) {
-			if (pro[i][j]) {
+			if (qrcode[i][j]) {
 				head.move(blankSpace);
 				currentHeadPos+=blankSpace;
 				blankSpace=0;
@@ -423,19 +469,13 @@ void print2D(int sizeX, int sizeY){
 }
 
 void loop() {
+  while(!newData){
+    recvWithEndMarker();
+  }
+  showNewData();
+  printString(receivedChars, true);
 
-
-	//print2D(50,  50);
-
-	printString("        Hallo",true);
-	printString("        Fettsaecke",true);
-	printString("        Fettsaecke",true);
-	printString("        Fettsaecke",true);
-	printString("Untermenschen",true);
-
-
-
-
+/*
 	feed.disable();
 	tape.disable();
 	dial.disable();
@@ -443,4 +483,5 @@ void loop() {
 
 
 	while (1) {}
+  */
 }
