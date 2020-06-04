@@ -26,20 +26,84 @@ int lastChar = 0;		//Save the last char that was printed
 int currentHeadPos = 0;		//Save the current head position (x coord)
 
 //The char table with all avalable chars and ther position on the dial/wheel
-String charTable = "_W)UIN?D\"C*R$LTAY&VZSPFB?E0987654321+?>^f@?wjmlv-,.zobudiaesrngchpky????qxt#?<?`??G?%JQ~X!O/K(H\'M:;= \n";
+String charTable = "_W)UIN?D\"C*R$LTAY&VZSPFB~E0987654321+~>^f@~wjmlv-,.zobudiaesrngchpky~~~~qxt#~<~`~~G~%JQ~X!O/K(H\'M:;= \n\r";
+
+long previousMillis=0;
 
 void printChar(char charToPrint);
 
-void
-recvWithEndMarker ()
+void dialReset ()
 {
+tape.enable ();
+head.enable ();
+
+	do {
+		tape.move(1);
+		delay(2);
+	} while(digitalRead (PB13) == LOW);
+	 do {
+		 tape.move(1);
+		 delay(2);
+		} while(digitalRead (PB13) == HIGH);
+		do {
+			tape.move(1);
+			delay(2);
+		} while(digitalRead (PB13) == LOW);
+
+	while (digitalRead (PB13) == HIGH)
+{
+	head.move (-1);
+	delay (2);
+}
+head.disable ();
+
+dial.enable ();
+dial.move (-4 * 100);
+delay (100);
+
+head.enable ();
+head.move (70);
+head.disable ();
+
+if (currentHeadPos > 0)
+{
+	head.enable ();
+	head.move (currentHeadPos);
+	head.disable ();
+}
+lastChar=0;
+
+}
+
+void
+recvWithEndMarker (){
+	unsigned long currentMillis = millis();
 	int rc = 0;
-	if (Serial.available () > 0)
-	{
+	if (Serial.available () > 0){
+		previousMillis = currentMillis;
 		rc = Serial.read ();
-		if (rc >= 0) {
+		if (rc >= 0){
 			printChar((char)rc);
 		}
+	}else{
+		if (currentMillis - previousMillis >= 50000) {
+			previousMillis = currentMillis;
+			feed.disable ();
+			tape.disable ();
+			dial.disable ();
+			head.disable ();
+			while (Serial.available () == 0) {
+			}
+
+			digitalWrite (PB4, HIGH);
+			delay (1);
+			digitalWrite (PB4, LOW);
+			delay (1);
+			digitalWrite (PB4, HIGH);
+
+			dialReset ();
+			tape.move(-20);
+			}
 	}
 }
 
@@ -186,37 +250,12 @@ xyMove (int x, int y)
 /*
    Reset the dail and return to the last head pos if needed
  */
-	void
-dialReset ()
-{
-	head.enable ();
-	while (digitalRead (PB13) == HIGH)
-	{
-		head.move (-1);
-		delay (1);
-	}
-	head.disable ();
 
-	dial.enable ();
-	dial.move (-4 * 100);
-	delay (100);
-
-	head.enable ();
-	head.move (70);
-	head.disable ();
-
-	if (currentHeadPos > 0)
-	{
-		head.enable ();
-		head.move (currentHeadPos);
-		head.disable ();
-	}
-}
 
 	void
 setup ()
 {
-	Serial.begin (115200);
+	Serial.begin (9600);
 	Serial.print ("Ready...");
 
 	feed.begin (RPM, MICROSTEPS);
@@ -246,6 +285,7 @@ setup ()
 	digitalWrite (PB4, HIGH);
 
 	dialReset ();
+
 }
 
 	void
@@ -282,10 +322,8 @@ printPixelRelativ (int x, int y)
 }
 
 	void
-print2D (int sizeX, int sizeY)
-{
-	for (int i = 0; i < sizeY; i++)
-	{
+print2D (int sizeX, int sizeY){
+	for (int i = 0; i < sizeY; i++){
 		int blankSpace = 0;
 		for (int j = 0; j < sizeX; j++)
 		{
@@ -315,8 +353,11 @@ print2D (int sizeX, int sizeY)
 	feed.move ((-5 * sizeY) + 20);
 }
 
+
+
 	void
 loop ()
 {
+
 	recvWithEndMarker ();
 }
