@@ -1,7 +1,14 @@
 #include "carriage.h"
 
 // TODO: convert to Position struct (carriage variable) and also save y pos
-int currentHeadPos = 0; // Save the current head posiion (x)
+int currentHeadPos = 0;
+// Position carriage = {0, 0};
+int lastChar = 0;
+
+BasicStepperDriver feed (MOTOR_STEPS, PA6, PA5, PA7);
+BasicStepperDriver tape (MOTOR_STEPS, PB7, PB8, PB0);
+BasicStepperDriver dial (MOTOR_STEPS, PA15, PB3, PB10);
+BasicStepperDriver head (MOTOR_STEPS, PB5, PB6, PB1);
 
 
 void hammerHit() {
@@ -16,6 +23,19 @@ void carriageReturn() {
     head.move(0);
     carriage.x = 0;
     head.disable();
+}
+
+void step() {
+    head.enable();
+    head.move(CHAR_SPACE);
+    currentHeadPos += CHAR_SPACE;
+}
+
+void refreshTape() {
+    tape.enable();
+    tape.move(TAPE_SPACE);
+    delay(1);
+    tape.disable();
 }
 
 void dialReset() {
@@ -57,6 +77,19 @@ void dialReset() {
         head.disable();
     }
     lastChar = 0;
+}
+
+void turnDialTo(char pos) {
+    int toMove = 4 * pos;
+    int diff = toMove - lastChar;
+
+    if (abs(diff) != 0) {
+        dial.move(toMove - lastChar + 8);
+        delay(30);
+        dial.move(-8);
+    }
+
+    lastChar = toMove;
 }
 
 void xyMove(int x, int y) {

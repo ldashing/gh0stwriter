@@ -1,6 +1,4 @@
-#include "ghostwriter.h"
-
-int lastChar = 0; // Save the last char that was printed
+#include "gh0stwriter.h"
 
 void newLine() {
     head.enable();
@@ -13,7 +11,7 @@ void newLine() {
 }
 
 void printChar(char charToPrint) {
-    char charNumber = ascii_lookup[charToPrint];
+    char charNumber = ascii_lookup[(int)charToPrint];
     // Some special characters
     if (charNumber >= 100) {
         switch (charNumber) {
@@ -94,28 +92,16 @@ void printChar(char charToPrint) {
                 break;
         }
     } else if (charNumber >= 0) {
-        int toMove = 4 * charNumber;
-        int diff = toMove - lastChar;
-
-        if (abs(diff) != 0) {
-            dial.move(toMove - lastChar + 8);
-            delay(30);
-            dial.move(-8);
-        }
-
-        lastChar = toMove;
+        // turn Dial to typed character
+        turnDialTo(charNumber);
+        // wait for the dial to finish tuning
         delay(20);
+        // its hammer time !!! (print the character for real)
         hammerHit();
-
-        head.enable();
-        head.move(CHAR_SPACE);
-        currentHeadPos += CHAR_SPACE;
-
-        tape.enable();
-        tape.move(-12);
-        delay(1);
-        tape.move(-12);
-        tape.disable();
+        // move carriage by the width of a generic character
+        step();
+        // turn the tape one character wide
+        refreshTape();
     }
     head.disable();
 }

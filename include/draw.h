@@ -1,8 +1,10 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-#include "gh0stwriter.h"
 #include "carriage.h"
+#include "ascii-map.h"
+
+// extern int currentHeadPos;
 
 /*
  * Draw a two dimensional bool array relative to the carriage position

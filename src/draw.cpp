@@ -31,16 +31,7 @@ void printPixelRelativ(int x, int y) {
     currentHeadPos += x;
     feed.move(y);
 
-    int toMove = 4 * ascii_lookup['.'];
-    int diff = toMove - lastChar;
-
-    if (abs(diff) != 0) {
-        dial.move(toMove - lastChar + 8);
-        delay(30);
-        dial.move(-8);
-    }
-    lastChar = toMove;
-
+    turnDialTo(ascii_lookup['.']);
     delay(20);
     hammerHit();
 

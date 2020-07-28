@@ -1,6 +1,8 @@
+#ifndef ASCII_MAP_H
+#define ASCII_MAP_H
 #define ASCII_SIZE 256
 
-char ascii_lookup[ASCII_SIZE] = {
+static char ascii_lookup[ASCII_SIZE] = {
     255, // NULL
     255, // SOH
     255, // STX
@@ -258,3 +260,6 @@ char ascii_lookup[ASCII_SIZE] = {
     255,
     255, // Nothing
 };
+
+#endif
+

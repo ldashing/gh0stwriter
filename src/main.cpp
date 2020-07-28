@@ -2,8 +2,6 @@
 
 #include "gh0stwriter.h"
 
-int currentHeadPos = 0;     // Save the current head position (x coord)
-
 byte escapeCounter = 0;
 long previousMillis = 0;
 
