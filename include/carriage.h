@@ -10,6 +10,8 @@
 #define CHAR_SPACE  24      // steps for the carriage to move for one character
 #define TAPE_SPACE -24      // steps for the tape to refresh color for one character
 
+#define DIAL_SIZE   100     // number of characters the dial has.
+
 #define RESET_POS_PIN PB13
 
 extern BasicStepperDriver feed;

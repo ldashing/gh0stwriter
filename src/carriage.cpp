@@ -80,16 +80,19 @@ void dialReset() {
 }
 
 void turnDialTo(char pos) {
-    int toMove = 4 * pos;
-    int diff = toMove - lastChar;
+    int diff = pos - lastChar;
 
-    if (abs(diff) != 0) {
-        dial.move(toMove - lastChar + 8);
-        delay(30);
-        dial.move(-8);
+    if (diff > DIAL_SIZE / 2) {
+        diff = diff - DIAL_SIZE;
+    } else if (diff < DIAL_SIZE / 2 * -1) {
+        diff = diff + DIAL_SIZE;
     }
 
-    lastChar = toMove;
+    dial.move(4 * diff + 8);
+    delay(30);
+    dial.move(-8);
+
+    lastChar = pos;
 }
 
 void xyMove(int x, int y) {
