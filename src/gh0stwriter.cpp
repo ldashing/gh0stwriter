@@ -1,5 +1,7 @@
 #include "gh0stwriter.h"
 
+String lastLine ("");
+
 void newLine() {
     head.enable();
     head.move(-currentHeadPos);
@@ -8,6 +10,21 @@ void newLine() {
     feed.move(LINE_SPACE);
     feed.disable();
     head.disable();
+}
+
+void deleteLast() {
+    // turn to character that needs to be deleted
+    turnDialTo(lastLine.charAt(lastLine.length()));
+
+    // TODO: enable use of delete tape
+
+    // do the actual delete
+    hammerHit();
+
+    // TODO: disable use of delete tape
+    
+    // remove last character from buffer
+    lastLine = lastLine.substring(0, lastLine.length() - 1);
 }
 
 void printChar(char charToPrint) {

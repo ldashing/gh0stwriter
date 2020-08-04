@@ -10,6 +10,23 @@ BasicStepperDriver tape (MOTOR_STEPS, PB7, PB8, PB0);
 BasicStepperDriver dial (MOTOR_STEPS, PA15, PB3, PB10);
 BasicStepperDriver head (MOTOR_STEPS, PB5, PB6, PB1);
 
+void initCarriage() {
+    feed.begin(RPM, MICROSTEPS);
+    tape.begin(RPM, MICROSTEPS);
+    dial.begin(DIAL_RPM, 2);
+    head.begin(RPM, MICROSTEPS);
+
+    feed.setEnableActiveState(LOW);
+    tape.setEnableActiveState(LOW);
+    dial.setEnableActiveState(LOW);
+    head.setEnableActiveState(LOW);
+
+    feed.disable();
+    tape.disable();
+    dial.disable();
+    head.disable();
+}
+
 
 void hammerHit() {
     digitalWrite(PB12, HIGH);

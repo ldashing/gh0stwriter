@@ -1,4 +1,4 @@
-#ifndef CARRIAGE_H
+#ifnde CARRIAGE_H
 #define CARRIAGE_H
 
 #include "BasicStepperDriver.h"
@@ -11,6 +11,7 @@
 #define TAPE_SPACE -24      // steps for the tape to refresh color for one character
 
 #define DIAL_SIZE   100     // number of characters the dial has.
+#define DIAL_RPM    RPM
 
 #define RESET_POS_PIN PB13
 
@@ -28,6 +29,11 @@ typedef struct {
 
 extern Position carriage;
 extern int currentHeadPos; // Save the current head posiion (x)
+
+/*
+ * Initialize all necessary Stepper driver
+ */
+void initCarriage();
 
 /*
  * Hits the hammer as fast as possible

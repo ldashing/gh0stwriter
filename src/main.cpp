@@ -6,7 +6,29 @@ byte escapeCounter = 0;
 long previousMillis = 0;
 
 
-void recvSerialData () {
+void setup() {
+    Serial.begin(9600);
+
+    initCarriage();
+
+    // TODO: Pin names
+    // TODO: what is this code for?
+    pinMode(PB13, INPUT_PULLUP);
+    pinMode(PB12, OUTPUT);
+    digitalWrite(PB12, LOW);
+    pinMode(PB12, OUTPUT);
+
+    // This is a reocurring code snippet so maybe make a function out of it
+    digitalWrite(PB4, HIGH);
+    delay(1);
+    digitalWrite(PB4, LOW);
+    delay(1);
+    digitalWrite(PB4, HIGH);
+
+    dialReset();
+}
+
+void loop() {
     unsigned long currentMillis = millis();
     char rc = 0;
     if (Serial.available() > 0){
@@ -79,42 +101,5 @@ void recvSerialData () {
             tape.move(-20);
         }
     }
-}
-
-void setup() {
-    Serial.begin(9600);
-    //Serial.print("Ready...");
-
-    feed.begin(RPM, MICROSTEPS);
-    tape.begin(RPM, MICROSTEPS);
-    dial.begin(100, 2);
-    head.begin(RPM, MICROSTEPS);
-
-    feed.setEnableActiveState(LOW);
-    tape.setEnableActiveState(LOW);
-    dial.setEnableActiveState(LOW);
-    head.setEnableActiveState(LOW);
-
-    feed.disable();
-    tape.disable();
-    dial.disable();
-    head.disable();
-
-    pinMode(PB13, INPUT_PULLUP);
-    pinMode(PB12, OUTPUT);
-    digitalWrite(PB12, LOW);
-    pinMode(PB12, OUTPUT);
-
-    digitalWrite(PB4, HIGH);
-    delay(1);
-    digitalWrite(PB4, LOW);
-    delay(1);
-    digitalWrite(PB4, HIGH);
-
-    dialReset();
-}
-
-void loop() {
-    recvSerialData ();
 }
 
