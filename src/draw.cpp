@@ -34,6 +34,7 @@ void printPixelRelativ(int x, int y) {
     turnDialTo(ascii_lookup['.']);
     delay(20);
     hammerHit();
+    delay(20);
 
     tape.enable();
     tape.move(-9);
@@ -42,3 +43,11 @@ void printPixelRelativ(int x, int y) {
     tape.disable();
 }
 
+void printPixelHere(){
+    delay(13);
+    hammerHit();
+    //delay(5);
+    tape.enable();
+    tape.move(-18);
+    tape.disable();
+}

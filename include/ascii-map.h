@@ -20,7 +20,7 @@ static char ascii_lookup[ASCII_SIZE] = {
     255, // SO - shift out
     255, // SI - shift in
     255, // DLE - data link escape
-    255, // DC1 - device control 1
+    254, // DC1 - device control 1
     255, // DC2
     255, // DC3
     255, // DC4
@@ -262,4 +262,3 @@ static char ascii_lookup[ASCII_SIZE] = {
 };
 
 #endif
-

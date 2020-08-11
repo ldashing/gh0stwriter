@@ -17,6 +17,5 @@ void print2D(int, int, bool**);
  * Position is relative from the current carriage position + xy parameters
  */
 void printPixelRelativ(int, int);
-
+void printPixelHere();
 #endif
-

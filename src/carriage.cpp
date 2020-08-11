@@ -10,12 +10,14 @@ BasicStepperDriver tape (MOTOR_STEPS, PB7, PB8, PB0);
 BasicStepperDriver dial (MOTOR_STEPS, PA15, PB3, PB10);
 BasicStepperDriver head (MOTOR_STEPS, PB5, PB6, PB1);
 
+MultiDriver multiAxle(dial, head, tape);
+MultiDriver blank( head, tape);
 
 void hammerHit() {
     digitalWrite(PB12, HIGH);
     delay(10);
     digitalWrite(PB12, LOW);
-    delay(10);
+    //delay(10);
 }
 
 void carriageReturn() {
@@ -34,7 +36,6 @@ void step() {
 void refreshTape() {
     tape.enable();
     tape.move(TAPE_SPACE);
-    delay(1);
     tape.disable();
 }
 
@@ -81,16 +82,70 @@ void dialReset() {
 
 void turnDialTo(char pos) {
     int diff = pos - lastChar;
+    if (diff!=0) {
+        if (diff > DIAL_SIZE / 2) {
+            diff = diff - DIAL_SIZE;
+        } else if (diff < DIAL_SIZE / 2 * -1) {
+            diff = diff + DIAL_SIZE;
+        }
+        int dialtomove = (4 * diff)-10;
+        dial.move(dialtomove);
+        delay(10);
+        dial.move(10);
+        lastChar = pos;
+    }
+}
 
-    if (diff > DIAL_SIZE / 2) {
-        diff = diff - DIAL_SIZE;
-    } else if (diff < DIAL_SIZE / 2 * -1) {
-        diff = diff + DIAL_SIZE;
+void fasterCharPrint(char pos){
+    int diff = pos - lastChar;
+
+    if (diff!=0) {
+
+        if (diff > DIAL_SIZE / 2) {
+            diff = diff - DIAL_SIZE;
+        } else if (diff < DIAL_SIZE / 2 * -1) {
+            diff = diff + DIAL_SIZE;
+        }
+
+        int dialtomove = (4 * diff)-10;
+        multiAxle.enable();
+        multiAxle.move(dialtomove, CHAR_SPACE, TAPE_SPACE);
+        tape.disable();
+        head.disable();
+        currentHeadPos += CHAR_SPACE;
+
+        delay(10);
+        dial.move(10);
+        //delay(100);
+
+        head.disable();
+        tape.disable();
+
+
+    }else{
+        /*
+        head.enable();
+        tape.enable();
+        multiAxle.enable();
+        multiAxle.move(0, CHAR_SPACE, TAPE_SPACE);
+        head.disable();
+        tape.disable();
+        */
+
+        blank.enable();
+        blank.move(CHAR_SPACE, TAPE_SPACE);
+        blank.disable();
+        tape.disable();
+        currentHeadPos += CHAR_SPACE;
+
+/*
+        step();
+        refreshTape();
+        */
     }
 
-    dial.move(4 * diff + 8);
-    delay(30);
-    dial.move(-8);
+    hammerHit();
+
 
     lastChar = pos;
 }
@@ -99,4 +154,3 @@ void xyMove(int x, int y) {
     head.move(x);
     feed.move(y);
 }
-

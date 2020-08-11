@@ -2,12 +2,14 @@
 #define CARRIAGE_H
 
 #include "BasicStepperDriver.h"
+#include "MultiDriver.h"
+#include "SyncDriver.h"
 
 #define MOTOR_STEPS 200     // Motor steps per revolution. Most steppers are 200 steps or 1.8 degrees/step
-#define RPM         100     // Seames to be the best
+#define RPM         150     // Seames to be the best
 #define MICROSTEPS  1       // 1=full step, 2=half step etc.
 
-#define CHAR_SPACE  24      // steps for the carriage to move for one character
+#define CHAR_SPACE  20      // steps for the carriage to move for one character
 #define TAPE_SPACE -24      // steps for the tape to refresh color for one character
 
 #define DIAL_SIZE   100     // number of characters the dial has.
@@ -18,6 +20,10 @@ extern BasicStepperDriver feed;
 extern BasicStepperDriver tape;
 extern BasicStepperDriver dial;
 extern BasicStepperDriver head;
+
+extern MultiDriver multiAxle;
+extern MultiDriver blank;
+
 
 #define MAX_HEAD_POS 1300   // Maximal head position
 
@@ -65,4 +71,3 @@ void dialReset();
 void xyMove(int, int);
 
 #endif
-

@@ -3,8 +3,8 @@ import sys
 import time
 def printf(format, *args):
     sys.stdout.write(format % args)
-image = Image.open("never.jpg")
-basewidth = 100
+image = Image.open("bar.jpg")
+basewidth = 21
 wpercent = (basewidth/float(image.size[0]))
 hsize = int((float(image.size[1])*float(wpercent)))
 image = image.resize((basewidth,hsize), Image.ANTIALIAS)
@@ -15,13 +15,13 @@ for y in range(height):
     for x in range(width):
         l = image.getpixel((x,y))
         if l == 0:
-            print(end="▅")
+            print(end="1")
 #            time.sleep(0.01)
         else:
-            print(end="   ")
-#            time.sleep(0.01)
+            print(end="0")
+ #           time.sleep(0.01)
         #if x != width-1:
          #   print("")
-    print("")
-    #print("2")
+    #print("")
+    print("2")
 #print("3")
